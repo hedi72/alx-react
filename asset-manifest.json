@@ -1,0 +1,24 @@
+{
+  "files": {
+    "main.css": "/alx-react/static/css/main.d38e8e06.chunk.css",
+    "main.js": "/alx-react/static/js/main.6c5250da.chunk.js",
+    "main.js.map": "/alx-react/static/js/main.6c5250da.chunk.js.map",
+    "runtime-main.js": "/alx-react/static/js/runtime-main.19966379.js",
+    "runtime-main.js.map": "/alx-react/static/js/runtime-main.19966379.js.map",
+    "static/js/2.d4f07a98.chunk.js": "/alx-react/static/js/2.d4f07a98.chunk.js",
+    "static/js/2.d4f07a98.chunk.js.map": "/alx-react/static/js/2.d4f07a98.chunk.js.map",
+    "static/js/3.33aa6fd0.chunk.js": "/alx-react/static/js/3.33aa6fd0.chunk.js",
+    "static/js/3.33aa6fd0.chunk.js.map": "/alx-react/static/js/3.33aa6fd0.chunk.js.map",
+    "index.html": "/alx-react/index.html",
+    "static/css/main.d38e8e06.chunk.css.map": "/alx-react/static/css/main.d38e8e06.chunk.css.map",
+    "static/js/2.d4f07a98.chunk.js.LICENSE.txt": "/alx-react/static/js/2.d4f07a98.chunk.js.LICENSE.txt",
+    "static/media/close-icon.c41fbc95.png": "/alx-react/static/media/close-icon.c41fbc95.png",
+    "static/media/logoholb.24bab5d6.jpg": "/alx-react/static/media/logoholb.24bab5d6.jpg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.19966379.js",
+    "static/js/2.d4f07a98.chunk.js",
+    "static/css/main.d38e8e06.chunk.css",
+    "static/js/main.6c5250da.chunk.js"
+  ]
+}
