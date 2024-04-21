@@ -14,6 +14,6 @@
     "build": "webpack --mode production ./src/index.js --output-filename ./main.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Mariem Matri",
+  "author": "hedi taieb",
   "license": "ISC"
 }
