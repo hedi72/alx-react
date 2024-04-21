@@ -1,17 +1,23 @@
-import React from 'react';
-import Footer from './Footer';
-import { shallow } from "enzyme";
+/**
+ * @jest-environment jsdom
+*/
 
+import React from "react";
+import { shallow } from "enzyme";
+import Footer from "./Footer";
+import { StyleSheetTestUtils } from 'aphrodite';
+
+StyleSheetTestUtils.suppressStyleInjection();
 
 describe('<Footer />', () => {
-    it('Footer renders without crashing', () => {
-        const wrapper = shallow(<Footer />);
-        expect(wrapper).toBeDefined();
-    });
+  it('render a Footer component without crashing', () => {
+    const wrapper = shallow(<Footer />);
+    expect(wrapper).toHaveLength(1);
+	});
 
-    it('Footer renders the text Copyright', () => {
-        const wrapper = shallow(<Footer />);
-        const footerText = wrapper.text();
-        expect(footerText).toContain('Copyright');
-    });
+  it("Verify that the components at the very least render the text  Copyright", () => {
+    const wrapper = shallow(<Footer />);
+    expect(wrapper.find("footer p")).toHaveLength(1);
+    expect(wrapper.find("footer p").text()).toContain("Copyright");
+  });
 });

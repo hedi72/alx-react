@@ -1,28 +1,32 @@
-import React from "react";
-import withLogging from "./WithLogging";
-import { shallow, mount } from "enzyme";
-import Login from "../Login/Login";
+/**
+ * @jest-environment jsdom
+ */
+ import React from 'react';
+ import { mount } from 'enzyme';
+ import Login from '../Login/Login';
+ import WithLogging from './WithLogging';
+ import { StyleSheetTestUtils } from 'aphrodite';
+ 
+ StyleSheetTestUtils.suppressStyleInjection();
 
-
-describe('WithLogging HOC', () => {
-    const WrappedComponent = withLogging(() => <p>test</p>)
-    it('calls console.log on mount and unmount', () => {
-        const spy = jest.spyOn(console, "log").mockImplementation();
-        const NewComponent = withLogging(WrappedComponent);
-        const wrapper = mount(<NewComponent />);
-        expect(spy).toBeCalled();
-        wrapper.unmount();
-        expect(spy).toBeCalled();
-        spy.mockRestore();
-    });
-
-    it('calls console.log when wrapped element is Login', () => {
-        const spy = jest.spyOn(console, "log").mockImplementation();
-        const NewComponent = withLogging(Login);
-        const wrapper = mount(<NewComponent />);
-        expect(spy).toBeCalledWith('Component Login is mounted');
-        wrapper.unmount();
-        expect(spy).toBeCalledWith('Component Login is going to unmount');
-        spy.mockRestore();
-    });
-});
+ describe('<WithLogging /> HOC', () => {
+   it('verify the console.log output when mounting and umounting pure HTML', () => {
+     const spy = jest.spyOn(console, 'log');
+     const Component = WithLogging(() => <p />);
+     const wrapper = mount(<Component />);
+     expect(spy).toHaveBeenCalledWith('Component Component is mounted');
+     wrapper.unmount();
+     expect(spy).toHaveBeenCalledWith('Component Component is going to unmount');
+     spy.mockRestore();
+   });
+ 
+   it('verify the console.log output when mounting and umounting Login component', () => {
+     const spy = jest.spyOn(console, 'log');
+     const Component = WithLogging(Login);
+     const wrapper = mount(<Component />);
+     expect(spy).toHaveBeenCalledWith('Component Login is mounted');
+     wrapper.unmount();
+     expect(spy).toHaveBeenCalledWith('Component Login is going to unmount');
+     spy.mockRestore();
+   });
+ });

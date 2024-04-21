@@ -1,29 +1,33 @@
-import React from "react";
+/**
+ * @jest-environment jsdom
+ */
+
 import { shallow } from "enzyme";
+import React from "react";
 import CourseListRow from "./CourseListRow";
+import { StyleSheetTestUtils } from 'aphrodite';
 
-describe('CourseListRow', () => {
-    it('should render without crashing', () => {
-        shallow(<CourseListRow />);
-    });
+StyleSheetTestUtils.suppressStyleInjection();
 
-    it('CourseListRow renders one cell with colspan = 2 when textSecondCell does not exist', () => {
-        const wrapper = shallow(<CourseListRow isHeader={true} textFirstCell="Available courses" />);
-        expect(wrapper.find('th').prop("colSpan")).toBe(2);
-        expect(wrapper.find('th').text("Available courses"));
-    });
 
-    it('CourseListRow renders two cells when textSecondCell exists', () => {
-        const wrapper = shallow(<CourseListRow isHeader={true} textFirstCell="Course name" textSecondCell="Credit" />);
-        expect(wrapper.find('tr').children()).toHaveLength(2);
-        expect(wrapper.find('tr').childAt(0).text()).toBe("Course name");
-        expect(wrapper.find('tr').childAt(1).text()).toBe("Credit");
-    });
+describe('Test CourseListRow.js', () => {
+  it('CourseListRow  render without crashing', () => {
+    expect(shallow(<CourseListRow textFirstCell='test' />).exists());
+  });
 
-    it('CourseListRow renders two td elements with a tr element', () => {
-        const wrapper = shallow(<CourseListRow isHeader={false} textFirstCell="ES6" textSecondCell="60" />);
-        expect(wrapper.find('tr').children()).toHaveLength(2);
-        expect(wrapper.find('tr').childAt(0).text()).toEqual("ES6");
-        expect(wrapper.find('tr').childAt(1).text()).toEqual("60");
-    });
+  it('render isHeader is True and render with one th', () => {
+    const wrapper = shallow(<CourseListRow isHeader={true} textFirstCell='test' />);
+    expect(wrapper.find('th')).toHaveLength(1);
+    expect(wrapper.find('th').prop('colSpan')).toEqual("2");
+  });
+
+  it('render isHeader is True and render with two th', () => {
+    const wrapper = shallow(<CourseListRow isHeader={true} textFirstCell='test' textSecondCell='test' />);
+    expect(wrapper.find('th')).toHaveLength(2);
+  });
+
+  it('render isHeader is False and with two td', () => {
+    const wrapper = shallow(<CourseListRow isHeader={false} textFirstCell='test' textSecondCell='test' />);
+    expect(wrapper.find('td')).toHaveLength(2);
+  });
 });

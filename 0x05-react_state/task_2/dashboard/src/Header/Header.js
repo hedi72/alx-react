@@ -1,46 +1,58 @@
-import React from 'react';
-import logo from '../assets/holberton-logo.jpg';
-import { StyleSheet, css } from "aphrodite";
-import { AppContext } from '../App/AppContext';
+import React, { cloneElement } from "react";
+import { css, StyleSheet } from 'aphrodite';
+import holberton_logo from "../assets/holberton_logo.jpg";
+import { AppContext } from '../App/AppContext'
 
-
-const Header = () => {
-  const { user, logOut } = React.useContext(AppContext);
-  return (
-    <>
-      <div className={css(styles.AppHeader)}>
-          <img src={logo} className={css(styles.AppLogo)} alt="logo" />
-          <h1>School dashboard</h1>
-      </div>
-      {user.isLoggedIn && (
-                <section className={css(styles.welcome)} id="logoutSection">
-                    Welcome<strong> {user.email} </strong>
-                    <em>
-                        <a href="#" onClick={logOut}>
-                            (logout)
-                        </a>
-                    </em>
-                </section>
-            )}
-    </>
-  )
-}
 
 const styles = StyleSheet.create({
-  AppHeader: {
-    display: 'flex',
-    alignItems: 'center',
-    borderBottom: '3px solid #c1384c',
-    color: '#c1384c',
+  header: {
+    display: "flex",
+    color: '#e14852',
+    alignItems: "center"
   },
-
-  AppLogo: {
+  headerLogo: {
     width: '200px',
-    height: 'auto',
+    height: '200px'
   },
-  welcome: {
-    marginTop: '20px',
-    marginLeft: '20px'
-}
+  span: {
+    fontStyle: 'italic',
+    textDecoration: 'underline black'
+  },
+  welcomeParagraph: {
+    marginLeft: '15px',
+    color: 'black',
+    fontSize: '1.3rem'
+  },
+  welcomeParagraphSmall: {
+    '@media (max-width: 900px)': {
+      fontSize: '1.1rem',
+      marginLeft: '10px'
+    }
+  }
 })
-export default Header;
+
+export default class Header extends React.Component {
+  
+  constructor(props) {
+    super(props)
+  }
+
+  render() {
+
+    const { user, logOut } = this.context
+
+    return (
+      <header className={css(styles.header)}>
+        <img src={holberton_logo} className={css(styles.headerLogo)} alt="Holberton Logo" />
+        <h1>School dashboard</h1>
+        {user.isLoggedIn && (
+          <p id='logoutSection' className={css(styles.welcomeParagraph, styles.welcomeParagraphSmall)}>Welcome <b>{`${user.email} `}</b><span onClick={logOut} className={css(styles.span)}>(logout)</span></p>
+        )}
+
+      </header>
+
+    );
+  }
+}
+
+Header.contextType = AppContext;

@@ -1,22 +1,38 @@
-import React from 'react'
-import { StyleSheet, css } from "aphrodite";
+import React from "react";
+import { css, StyleSheet } from "aphrodite";
+import { symbol } from "prop-types";
+
+const styles = StyleSheet.create({
+  bodyLogin: {
+    margin: "20px 0 0px 0px",
+    flexGrow: 1,
+  },
+  smallInput: {
+    "@media (max-width: 900px)": {
+      display: "block",
+      marginTop: "10px",
+      marginBottom: "5px",
+    },
+  },
+});
 
 class Login extends React.Component {
   constructor(props) {
     super(props);
+    this.handleLoginSubmit = this.handleLoginSubmit.bind(this)
+    this.handleChangeEmail = this.handleChangeEmail.bind(this)
+    this.handleChangePassword = this.handleChangePassword.bind(this)
+
     this.state = {
       isLoggedIn: false,
       email: '',
       password: '',
       enableSubmit: false
-    }
-
-    this.handleLoginSubmit = this.handleLoginSubmit.bind(this);
-    this.handleChangeEmail = this.handleChangeEmail.bind(this);
-    this.handleChangePassword = this.handleChangePassword.bind(this);
+    };
   }
 
-  handleLoginSubmit() {
+  handleLoginSubmit(event){
+    event.preventDefault();
     this.setState({
       isLoggedIn: true
     })
@@ -25,61 +41,62 @@ class Login extends React.Component {
   handleChangeEmail(event) {
     this.setState({
       email: event.target.value
+    }, () => {
+      if (this.state.email !== '' && this.state.password !== '') {
+        this.setState({
+          enableSubmit: true
+        })
+      }
     })
-    if(event.target.value.length > 0 && this.state.password.length > 0) {
-      this.setState({
-        enableSubmit: true
-      })
-    }
   }
 
   handleChangePassword(event) {
     this.setState({
       password: event.target.value
+    }, () => {
+      if (this.state.email !== '' && this.state.password !== '') {
+        this.setState({
+          enableSubmit: true
+        })
+      }
     })
-    if(event.target.value.length > 0 && this.state.email.length > 0) {
-      this.setState({
-        enableSubmit: true
-      })
-    }
   }
 
   render() {
     return (
-      <form onSubmit={this.handleLoginSubmit} className={css(styles.AppBody)}>
-        <p>Login to access the full dashboard</p>
-        <label className={css(styles.label)} htmlFor="email">Email:</label>
-        <input className={css(styles.input)} type="text" id="email" name="email" value={this.state.email} onChange={this.handleChangeEmail} />
-        <label className={css(styles.label)} htmlFor="password">Password:</label>
-        <input className={css(styles.input)} type="password" id="password" name="password" value={this.state.password} onChange={this.handleChangePassword} />
-        <input style={{
-          background: "transparent",
-          borderRadius: '5px',
-          margin: "0 0 0 10px",
-          border: "1px solid gray"
-        }} type='submit' value='OK' disabled={!this.state.enableSubmit} />
-      </form>
-    )
+      <div className="body-login">
+        <div className={css(styles.bodyLogin, styles.smallInput)}>
+          <p>Login to access the full dashboard</p>
+          <form onSubmit={this.handleLoginSubmit}> 
+            <label htmlFor="fname" className={css(styles.smallInput)}>
+              Email:
+            </label>
+            <input
+              type="email"
+              id="email"
+              value= {this.state.email}
+              onChange={this.handleChangeEmail}
+              className={css(styles.bodyLoginInput, styles.smallInput)}
+            />
+            <label
+              htmlFor="lname"
+              className={css(styles.smallInput, styles.button)}
+            >
+              Password:
+            </label>
+            <input
+              type="password"
+              id="password"
+              value={this.state.password}
+              onChange={this.handleChangePassword}
+              className={css(styles.bodyLoginInput, styles.smallInput)}
+            />
+            <input type='submit' value='Ok' disabled={!this.state.enableSubmit} className={css(styles.button, styles.smallInput)}/>
+          </form>
+        </div>
+      </div>
+    );
   }
 }
 
-const styles = StyleSheet.create({
-  AppBody: {
-    fontSize: '1rem',
-    padding: '50px',
-  },
-  label: {
-    marginRight: '5px',
-    '@media (max-width: 900px)': {
-      display: 'block'
-    }
-  },
-  input: {
-    marginRight: '5px',
-    '@media (max-width: 900px)': {
-      display: 'block'
-    }
-  }
-})
-
-export default Login
+export default Login;

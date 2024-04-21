@@ -1,41 +1,35 @@
-import React from 'react'
-import { StyleSheet, css } from "aphrodite";
+import React from "react";
+import { css, StyleSheet } from 'aphrodite';
+import { symbol } from "prop-types";
 
-const Login = () => {
-  return (
-    <div className={css(styles.AppBody)}> 
-         <p>Login to access the full dashboard</p>
-         <label className={css(styles.label)} htmlFor="email">Email:</label>
-         <input className={css(styles.input)} type="text" id="email" name="email"></input>
-         <label className={css(styles.label)} htmlFor="password">Password:</label>
-         <input className={css(styles.input)} type="password" id="password" name="password"></input>
-         <button style={{
-               background: "transparent",
-               borderRadius: '5px',
-               margin: "0 0 0 10px",
-               border: "1px solid gray"
-         }}>OK</button>
-    </div>
-  )
-}
 
 const styles = StyleSheet.create({
-  AppBody: {
-    fontSize: '1rem',
-    padding: '50px',
+  bodyLogin: {
+    margin: '20px 0 0px 0px',
+    flexGrow: 1
   },
-  label: {
-    marginRight: '5px',
+  smallInput : {
     '@media (max-width: 900px)': {
-      display: 'block'
-    }
-  },
-  input: {
-    marginRight: '5px',
-    '@media (max-width: 900px)': {
-      display: 'block'
+      display: 'block',
+      marginTop: '10px',
+      marginBottom: '5px',
     }
   }
 })
 
-export default Login
+function Login() {
+  return (
+    <div className='body-login'>
+      <div className={css(styles.bodyLogin, styles.smallInput)}>
+        <p>Login to access the full dashboard</p>
+        <label htmlFor="fname" className={css(styles.smallInput)}>Email:</label>
+        <input type="email" id="email" className={css(styles.bodyLoginInput, styles.smallInput)}/>
+        <label htmlFor="lname" className={css(styles.smallInput, styles.button)}>Password:</label>
+        <input type="password" id="password" className={css(styles.bodyLoginInput, styles.smallInput)}/>
+        <button className={css(styles.button, styles.smallInput)}>OK</button>
+      </div>
+    </div>
+  );
+}
+
+export default Login;

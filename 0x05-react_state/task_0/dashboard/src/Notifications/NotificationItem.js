@@ -1,70 +1,57 @@
-import React, { PureComponent } from "react";
-import PropType from "prop-types";
-import { StyleSheet, css } from "aphrodite";
-
-
+import React from "react";
+import PropTypes from "prop-types";
+import { css, StyleSheet } from 'aphrodite';
 
 const styles = StyleSheet.create({
-  default: {
-    color: 'blue',
-    "@media (max-width: 900px)": {
-      borderBottom: "1px solid black",
-      listStyle: "none",
-      fontSize: "20px",
-      padding: "10px 8px",
-    },
-  },
   urgent: {
-    color: 'red',
-    "@media (max-width: 900px)": {
-      borderBottom: "1px solid black",
-      listStyle: "none",
-      fontSize: "20px",
-      padding: "10px 8px",
-    },
+    color: '#ff0000',
+    borderBottom: 'black'
+  },
+  default: {
+    color: '#0000ff',
+    // borderBottom: '1px solid black',
+  },
+  styleSmall : {
+    '@media (max-width: 900px)': {
+      borderBottom:'1px solid black',
+      padding: '10px 8px',
+      fontSize: '20px'
+    }
   }
 })
 
-class NotificationItem extends PureComponent {
-  static PropType = {
-    __html: PropType.shape({
-      html: PropType.string,
-    }),
-    type: PropType.string.isRequired,
-    value: PropType.string,
-    markAsRead: PropType.func,
-    id: PropType.number,
-  };
 
-  static defaultProps = {
-    type: "default",
-    markAsRead: () => {
-      return;
-    },
-    id: 0,
-  };
+class NotificationItem extends React.PureComponent {
+  constructor (props) {
+    super(props)
+  }
+  render(){
 
-  render() {
-    const { type, html, value, markAsRead, id } = this.props;
-    return (
-      <>
-        {type && value ? (
-          <li onClick={() => markAsRead(id)} data-notification-type={type} className={type === "default" ? css(styles.default) : css(styles.urgent)}>
-            {value}
-          </li>
-        ) : null}
-        {html ? (
-          <li
-            className={css(styles.urgent)}
-            onClick={() => markAsRead(id)}
-            data-notification-type={type}
-            data-urgent
-            dangerouslySetInnerHTML={{ __html: html }}
-          ></li>
-        ) : null}
-      </>
-    );
+    if (this.props.value) {
+      return (<li data-notification-type={this.props.type} className={css(this.props.type === 'urgent' ? styles.urgent : styles.default, styles.styleSmall)} onClick={() => {this.props.markAsRead(this.props.id)}} >{this.props.value}</li>);
+    } else {
+      return (
+        <li data-notification-type={this.props.type} dangerouslySetInnerHTML={this.props.html} className={css(this.props.type === 'urgent' ? styles.urgent : styles.default, styles.styleSmall)} onClick={() => {this.props.markAsRead(this.props.id)}}></li>
+      );
+    }
   }
 }
+
+NotificationItem.defaultProps = {
+  type: "default",
+  value: "",
+  html: {},
+  markAsRead: () => {}
+};
+
+NotificationItem.propTypes = {
+  type: PropTypes.string,
+  value: PropTypes.string,
+  html: PropTypes.shape({
+    __html: PropTypes.string,
+  }),
+  markAsRead: PropTypes.func,
+  id: PropTypes.number,
+};
 
 export default NotificationItem;
